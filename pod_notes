@@ -1,0 +1,37 @@
+Kubernetes commands
+
+Imperative:
+
+kubernetes run nginx --image=nginx
+kubernetes run nginx --image=nginx
+
+kubectl explain pod
+
+
+Declarative:
+
+Create a .yaml file and use the apply command:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    env: demo
+    type: frontend
+spec:
+  containers:
+  - name: nginx-container
+    image: nginx
+    ports:
+    - containerPort: 80
+
+kubectl create -f pod.yaml
+or kubectl apply -f filename
+
+change the image name and checkusing kubectl describe command
+kubectl run nginx --image==nginx --dry-run==client-0 yaml
+
+kubectl run nginx --image==nginx --dry-run==client-0 yaml> pod2.yaml
+get inside of a pod
+kubectl exec -it nginx -- sh
