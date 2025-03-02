@@ -119,6 +119,80 @@ Verify if it is working as expected!
 kubectl get nodes
 ```
 
+If you are unable to get the nodes and pods details from worker nodes, it means 
+
+
+Verify if kubectl is installed on the Worker Node
+Run:
+
+sh
+Copy
+Edit
+kubectl version --client
+If not installed, install it:
+
+sh
+Copy
+Edit
+sudo apt update && sudo apt install -y kubectl
+2️⃣ Set Kubeconfig on the Worker Node
+Run:
+
+sh
+Copy
+Edit
+export KUBECONFIG=/etc/kubernetes/kubelet.conf
+Then try again:
+
+sh
+Copy
+Edit
+kubectl get nodes
+If that still fails, it means that the worker node does not have the correct kubeconfig file.
+
+3️⃣ Copy the Kubeconfig from Master Node
+On the master node, run:
+
+sh
+Copy
+Edit
+sudo cat /etc/kubernetes/admin.conf
+Copy the entire output.
+
+On the worker node, create a new config directory:
+
+sh
+Copy
+Edit
+mkdir -p $HOME/.kube
+Create a new kubeconfig file:
+
+sh
+Copy
+Edit
+nano $HOME/.kube/config
+Paste the contents from the master node into this file.
+
+Set the correct permissions:
+
+sh
+Copy
+Edit
+chmod 600 $HOME/.kube/config
+Now, test it:
+
+sh
+Copy
+Edit
+kubectl get nodes
+To make this permanent, add this line to .bashrc:
+
+sh
+Copy
+Edit
+echo "export KUBECONFIG=$HOME/.kube/config" >> ~/.bashrc
+source ~/.bashrc
+
 Link to the video tutorial: 
 
 Follow our tutorials here: https://www.youtube.com/@amonkincloud/videos \
