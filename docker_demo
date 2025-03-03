@@ -5,27 +5,28 @@ If you would like to use docker and Kubernetes sandbox environment , you can use
 https://labs.play-with-docker.com/
 https://labs.play-with-k8s.com/
 
+https://training.play-with-docker.com/beginner-linux/
+
 Download Docker desktop client
 
 https://www.docker.com/products/docker-desktop/
 Getting started with the demo
 Clone the below sample repository, or you can use any web application that you have
 
-git clone https://github.com/piyushsachdeva/todoapp-docker.git
+git clone https://github.com/docker/getting-started-app.git
 cd into the directory
 cd todoapp-docker/
 Create an empty file with the name Dockerfile
 touch Dockerfile
 
 Using the text editor of your choice, paste the below content: Note: Details about the below Dockerfile have already been shared in the video
-FROM node:18-alpine AS installer
+FROM node:18-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm install 
 COPY . .
-RUN npm run build
-FROM nginx:latest AS deployer
-COPY --from=installer /app/build /usr/share/nginx/html
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+EXPOSE 3000
+
 
 Build the docker image using the application code and Dockerfile
 
@@ -35,8 +36,9 @@ Verify the image has been created and stored locally using the below command:
 docker images
 
 Create a public repository on hub.docker.com and push the image to remote repo
-docker login
+docker login -u dibyendu
 docker tag todoapp-docker:latest username/new-reponame:tagname
+docker tag todoapp-docker:latest dibyenduds/test_repo:latest
 
 docker images
 docker push username/new-reponame:tagname
@@ -46,6 +48,8 @@ docker pull username/new-reponame:tagname
 
 To start the docker container, use the below command
 docker run -dp 3000:80 username/new-reponame:tagname
+docker run -dp 3000:80 dibyenduds/test_repo:latest
+
 
 Verify your app. If you have followed the above steps correctly, your app should be listening on localhost:3000
 To enter(exec) into the container, use the below command
