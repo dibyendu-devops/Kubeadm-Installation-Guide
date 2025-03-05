@@ -47,8 +47,8 @@ To pull the image to another environment, you can use the below command
 docker pull username/new-reponame:tagname
 
 To start the docker container, use the below command
-docker run -dp 3000:80 username/new-reponame:tagname
-docker run -dp 3000:80 dibyenduds/test_repo:latest
+docker run -dp 3000:3000 username/new-reponame:tagname
+docker run -dp 3000:3000 dibyenduds/test_repo:latest
 
 
 Verify your app. If you have followed the above steps correctly, your app should be listening on localhost:3000
